@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Aprenda inglês com estilo anime!">
+  <meta name="theme-color" content="#0d0d1a">
+  <title>AnimeEnglish ⚔️</title>
+  <style>
+/* ── Reset & Base ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d0d1a;
+  --bg2: #13132a;
+  --bg3: #1a1a35;
+  --card: #1e1e3a;
+  --card2: #252548;
+  --primary: #7c3aed;
+  --primary-bright: #9d5cf7;
+  --accent: #f59e0b;
+  --accent2: #fb923c;
+  --success: #10b981;
+  --danger: #ef4444;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --glow-purple: 0 0 20px rgba(124, 58, 237, 0.4);
+  --glow-gold: 0 0 20px rgba(245, 158, 11, 0.4);
+  --border: rgba(255,255,255,0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Screens ────────────────────────────────────────────────────────────────── */
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Home Screen ────────────────────────────────────────────────────────────── */
+.home-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-bg-deco {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.deco-kanji {
+  position: absolute;
+  top: -20px; right: -20px;
+  font-size: 180px;
+  color: rgba(124,58,237,0.04);
+  font-weight: 900;
+  line-height: 1;
+  user-select: none;
+}
+
+.deco-kanji2 {
+  position: absolute;
+  bottom: 60px; left: -30px;
+  font-size: 140px;
+  color: rgba(245,158,11,0.04);
+  font-weight: 900;
+  line-height: 1;
+  user-select: none;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.title-jp {
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--primary-bright);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.main-title {
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #9d5cf7, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.mascot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.mascot-body {
+  font-size: 52px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+.mascot-bubble {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 12px 12px 12px 0;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  position: relative;
+}
+
+/* ── Player Card ────────────────────────────────────────────────────────────── */
+.player-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--glow-purple);
+  position: relative;
+  z-index: 1;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.player-level {
+  background: linear-gradient(135deg, var(--primary), var(--primary-bright));
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.player-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.xp-bar-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.xp-bar {
+  height: 8px;
+  background: var(--bg3);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #f59e0b);
+  border-radius: 10px;
+  transition: width 0.6s ease;
+}
+
+.xp-bar-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────────── */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-size: 15px;
+  transition: all 0.15s ease;
+  letter-spacing: 0.3px;
+}
+
+.btn:active { transform: scale(0.96); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-bright));
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+}
+
+.btn-primary:hover { box-shadow: 0 4px 28px rgba(124,58,237,0.55); }
+
+.btn-secondary {
+  background: var(--card2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover { border-color: var(--primary); }
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), #34d399);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(16,185,129,0.35);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.btn-large { width: 100%; font-size: 17px; padding: 16px; }
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-back {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: color 0.15s;
+}
+.btn-back:hover { color: var(--text); }
+
+.home-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-pill {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Episode Select ─────────────────────────────────────────────────────────── */
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-top: 8px;
+}
+
+.screen-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  flex: 1;
+}
+
+.episode-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+
+.episode-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 4px solid var(--ep-color, var(--primary));
+  position: relative;
+  overflow: hidden;
+}
+
+.episode-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, var(--ep-color, var(--primary)) 0%, transparent 70%);
+  opacity: 0.08;
+  border-radius: 50%;
+}
+
+.episode-card:hover { transform: translateX(4px); border-color: var(--ep-color, var(--primary)); box-shadow: -4px 0 20px rgba(0,0,0,0.3); }
+.episode-card.done { opacity: 0.75; }
+
+.ep-icon { font-size: 28px; margin-bottom: 4px; }
+.ep-num { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+.ep-title { font-size: 18px; font-weight: 800; margin: 2px 0; }
+.ep-title-en { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+.ep-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
+
+.ep-footer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ep-xp {
+  background: rgba(245,158,11,0.15);
+  color: var(--accent);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ep-words {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.ep-done-badge {
+  margin-left: auto;
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ep-start {
+  margin-left: auto;
+  color: var(--primary-bright);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ── Lesson Header ─────────────────────────────────────────────────────────── */
+.lesson-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-top: 8px;
+}
+
+.lesson-ep-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.lesson-phase-badge {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Progress ──────────────────────────────────────────────────────────────── */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg3);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: var(--text-dim);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ── Study Card ────────────────────────────────────────────────────────────── */
+.study-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+  box-shadow: var(--glow-purple);
+}
+
+.study-card:hover { transform: scale(1.01); box-shadow: 0 8px 40px rgba(124,58,237,0.3); }
+.study-card:active { transform: scale(0.98); }
+
+.study-emoji { font-size: 72px; margin-bottom: 16px; animation: pulse 2s ease-in-out infinite; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
+}
+
+.study-en {
+  font-size: 40px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #fff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.study-pt {
+  font-size: 24px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.study-audio-hint {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* ── Example Block ─────────────────────────────────────────────────────────── */
+.example-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.example-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.example-en {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+.example-pt {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.btn-listen {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-listen:hover { border-color: var(--primary); color: var(--text); }
+
+/* ── Study Navigation ──────────────────────────────────────────────────────── */
+.study-nav {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.study-nav .btn { flex: 1; }
+
+.study-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding-bottom: 16px;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--bg3);
+  transition: all 0.3s;
+}
+
+.dot.done { background: var(--primary); opacity: 0.5; }
+.dot.active { background: var(--accent); transform: scale(1.4); }
+
+/* ── Quiz ──────────────────────────────────────────────────────────────────── */
+.quiz-score {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.streak-badge {
+  background: linear-gradient(135deg, #f59e0b, #fb923c);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-align: center;
+  margin-bottom: 12px;
+  animation: shakeIn 0.3s ease;
+}
+
+@keyframes shakeIn {
+  0%   { transform: scale(0.8); }
+  60%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.quiz-question {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: var(--glow-purple);
+}
+
+.quiz-word-emoji { font-size: 60px; margin-bottom: 10px; }
+
+.quiz-word-en {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--text);
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.quiz-listen { font-size: 20px; opacity: 0.6; }
+.quiz-instruction { font-size: 14px; color: var(--text-muted); }
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.quiz-option {
+  background: var(--card);
+  border: 2px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 16px 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--card2);
+  transform: scale(1.02);
+}
+
+.quiz-option.correct {
+  background: rgba(16,185,129,0.2);
+  border-color: var(--success);
+  color: var(--success);
+  animation: correctPop 0.3s ease;
+}
+
+.quiz-option.wrong {
+  background: rgba(239,68,68,0.15);
+  border-color: var(--danger);
+  color: var(--danger);
+  animation: wrongShake 0.3s ease;
+}
+
+@keyframes correctPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wrongShake {
+  0%,100% { transform: translateX(0); }
+  25%      { transform: translateX(-6px); }
+  75%      { transform: translateX(6px); }
+}
+
+.quiz-feedback {
+  text-align: center;
+  min-height: 40px;
+}
+
+.feedback {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  display: inline-block;
+  animation: fadeIn 0.2s ease;
+}
+
+.correct-msg { background: rgba(16,185,129,0.15); color: var(--success); }
+.wrong-msg   { background: rgba(239,68,68,0.12); color: var(--danger); }
+
+/* ── Result Screen ─────────────────────────────────────────────────────────── */
+.result-screen {
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.result-top { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+.result-grade {
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 1;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.grade-s { background: linear-gradient(135deg, #f59e0b, #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.grade-a { background: linear-gradient(135deg, #7c3aed, #9d5cf7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.grade-b { background: linear-gradient(135deg, #2563eb, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.grade-c { background: linear-gradient(135deg, #64748b, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+.result-msg { font-size: 20px; font-weight: 700; color: var(--text); }
+
+.perfect-banner {
+  background: linear-gradient(135deg, #f59e0b, #fb923c);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 10px 24px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  animation: shakeIn 0.3s ease;
+}
+
+.result-stats {
+  display: flex;
+  gap: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  width: 100%;
+}
+
+.rs-item { flex: 1; }
+.rs-value { font-size: 28px; font-weight: 900; color: var(--accent); }
+.rs-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+.levelup-banner {
+  background: linear-gradient(135deg, var(--primary), var(--primary-bright));
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 14px 24px;
+  border-radius: var(--radius-sm);
+  width: 100%;
+  animation: shakeIn 0.4s ease;
+}
+
+.ach-section {
+  background: var(--card);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: var(--radius);
+  padding: 16px;
+  width: 100%;
+  text-align: left;
+}
+
+.ach-section h3 { font-size: 15px; margin-bottom: 10px; color: var(--accent); }
+
+.ach-unlock {
+  font-size: 14px;
+  color: var(--text);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ach-unlock:last-child { border-bottom: none; }
+
+.result-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* ── Achievements Screen ──────────────────────────────────────────────────── */
+.ach-count {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.ach-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+.ach-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.ach-card.unlocked { border-color: rgba(245,158,11,0.3); box-shadow: 0 0 16px rgba(245,158,11,0.1); }
+.ach-card.locked { opacity: 0.5; }
+
+.ach-icon { font-size: 32px; min-width: 40px; text-align: center; }
+.ach-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.ach-desc { font-size: 12px; color: var(--text-muted); }
+
+/* ── Home Progress Row ─────────────────────────────────────────────────────── */
+.home-progress-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-prog-item {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+  text-align: center;
+}
+
+.home-prog-icon { font-size: 18px; margin-bottom: 2px; }
+.home-prog-val  { font-size: 16px; font-weight: 800; color: var(--accent); }
+.home-prog-label{ font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+/* ── Episode Tabs ───────────────────────────────────────────────────────────── */
+.ep-tabs-wrap {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.ep-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.ep-tab.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.4);
+}
+
+/* ── Episode Card Badge ─────────────────────────────────────────────────────── */
+.ep-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ep-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.vocab-badge   { background: rgba(52,152,219,0.15); color: #3498db; }
+.grammar-badge { background: rgba(245,158,11,0.15);  color: var(--accent); }
+
+/* ── Grammar Study Card ─────────────────────────────────────────────────────── */
+.grammar-card { cursor: pointer; }
+
+.grammar-sentence-display {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.answer-hl {
+  color: var(--accent);
+  background: rgba(245,158,11,0.12);
+  border-radius: 6px;
+  padding: 2px 8px;
+  border-bottom: 3px solid var(--accent);
+}
+
+.grammar-rule-tag {
+  display: inline-block;
+  background: rgba(124,58,237,0.15);
+  color: var(--primary-bright);
+  border: 1px solid rgba(124,58,237,0.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+/* ── Grammar Tip Box ────────────────────────────────────────────────────────── */
+.grammar-tip-box {
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.tip-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.tip-text {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ── Grammar Quiz ───────────────────────────────────────────────────────────── */
+.grammar-quiz-sentence {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.blank-slot {
+  display: inline-block;
+  min-width: 60px;
+  border-bottom: 3px solid var(--accent);
+  color: var(--accent);
+  font-weight: 900;
+  text-align: center;
+  margin: 0 4px;
+}
+
+.grammar-options {
+  grid-template-columns: 1fr 1fr;
+}
+
+.grammar-opt {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  font-family: 'Segoe UI', monospace, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* ── Result Next Button ─────────────────────────────────────────────────────── */
+.result-buttons .btn-secondary {
+  border-color: rgba(245,158,11,0.3);
+  text-align: left;
+  font-size: 14px;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--card2); border-radius: 4px; }
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .study-en { font-size: 32px; }
+  .quiz-options { grid-template-columns: 1fr; }
+  .main-title { font-size: 28px; }
+}
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div style="display:flex;height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:16px;color:#94a3b8;">
+      <div style="font-size:48px">⚔️</div>
+      <div style="font-size:18px;font-weight:700">Carregando AnimeEnglish...</div>
+    </div>
+  </div>
+  <script>
+// ═══════════════════════════════════════════════════════════════════════════
+// AnimeEnglish — Conteúdo Completo
+// ═══════════════════════════════════════════════════════════════════════════
+
+const EPISODES = [
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // VOCABULÁRIO
+  // ─────────────────────────────────────────────────────────────────────────
+
+  {
+    id: 1, type: "vocabulary",
+    title: "Saudações do Guerreiro", titleEn: "Warrior Greetings",
+    description: "Aprenda as primeiras palavras como um verdadeiro ninja!",
+    icon: "⚔️", color: "#ff6b35", xpReward: 50,
+    words: [
+      { en: "Hello",     pt: "Olá",        emoji: "👋", example: "Hello! I am a ninja!",          examplePt: "Olá! Eu sou um ninja!" },
+      { en: "Goodbye",   pt: "Tchau",       emoji: "👋", example: "Goodbye, my friend!",           examplePt: "Tchau, meu amigo!" },
+      { en: "Thank you", pt: "Obrigado",    emoji: "🙏", example: "Thank you for training me!",    examplePt: "Obrigado por me treinar!" },
+      { en: "Please",    pt: "Por favor",   emoji: "✨", example: "Please, teach me!",             examplePt: "Por favor, me ensine!" },
+      { en: "Yes",       pt: "Sim",         emoji: "✅", example: "Yes! I can do it!",             examplePt: "Sim! Eu consigo!" },
+      { en: "No",        pt: "Não",         emoji: "❌", example: "No, I won't give up!",          examplePt: "Não, eu não vou desistir!" },
+      { en: "Sorry",     pt: "Desculpa",    emoji: "😔", example: "Sorry, I was wrong.",           examplePt: "Desculpa, eu estava errado." },
+      { en: "Help",      pt: "Ajuda",       emoji: "🆘", example: "Help! I need power!",           examplePt: "Ajuda! Eu preciso de poder!" },
+    ]
+  },
+
+  {
+    id: 2, type: "vocabulary",
+    title: "Cores do Chakra", titleEn: "Chakra Colors",
+    description: "Descubra as cores dos poderes elementais!",
+    icon: "🌈", color: "#9b59b6", xpReward: 60,
+    words: [
+      { en: "Red",    pt: "Vermelho", emoji: "🔴", example: "Red is the color of fire!",      examplePt: "Vermelho é a cor do fogo!" },
+      { en: "Blue",   pt: "Azul",     emoji: "🔵", example: "Blue water gives me power!",     examplePt: "A água azul me dá poder!" },
+      { en: "Green",  pt: "Verde",    emoji: "🟢", example: "Green nature heals me!",          examplePt: "A natureza verde me cura!" },
+      { en: "Yellow", pt: "Amarelo",  emoji: "🟡", example: "Yellow lightning is fast!",       examplePt: "O relâmpago amarelo é rápido!" },
+      { en: "Black",  pt: "Preto",    emoji: "⚫", example: "Black shadows hide me!",          examplePt: "As sombras pretas me escondem!" },
+      { en: "White",  pt: "Branco",   emoji: "⚪", example: "White light protects us!",        examplePt: "A luz branca nos protege!" },
+      { en: "Orange", pt: "Laranja",  emoji: "🟠", example: "Orange is my favorite color!",   examplePt: "Laranja é minha cor favorita!" },
+      { en: "Purple", pt: "Roxo",     emoji: "🟣", example: "Purple chakra is rare!",          examplePt: "Chakra roxo é raro!" },
+    ]
+  },
+
+  {
+    id: 3, type: "vocabulary",
+    title: "O Poder dos Números", titleEn: "The Power of Numbers",
+    description: "Conte sua força com os números do poder!",
+    icon: "🔢", color: "#2ecc71", xpReward: 60,
+    words: [
+      { en: "One",   pt: "Um",    emoji: "1️⃣", example: "One warrior stands alone!",        examplePt: "Um guerreiro fica sozinho!" },
+      { en: "Two",   pt: "Dois",  emoji: "2️⃣", example: "Two swords, double power!",        examplePt: "Duas espadas, poder dobrado!" },
+      { en: "Three", pt: "Três",  emoji: "3️⃣", example: "Three shadows attack!",            examplePt: "Três sombras atacam!" },
+      { en: "Four",  pt: "Quatro",emoji: "4️⃣", example: "Four elements unite!",             examplePt: "Quatro elementos se unem!" },
+      { en: "Five",  pt: "Cinco", emoji: "5️⃣", example: "Five heroes fight together!",      examplePt: "Cinco heróis lutam juntos!" },
+      { en: "Six",   pt: "Seis",  emoji: "6️⃣", example: "Six paths of power!",              examplePt: "Seis caminhos de poder!" },
+      { en: "Seven", pt: "Sete",  emoji: "7️⃣", example: "Seven dragon balls!",              examplePt: "Sete esferas do dragão!" },
+      { en: "Eight", pt: "Oito",  emoji: "8️⃣", example: "Eight gates are open!",            examplePt: "Oito portões estão abertos!" },
+      { en: "Nine",  pt: "Nove",  emoji: "9️⃣", example: "Nine-tailed fox is free!",         examplePt: "A raposa de nove caudas está livre!" },
+      { en: "Ten",   pt: "Dez",   emoji: "🔟", example: "Ten thousand punches!",             examplePt: "Dez mil socos!" },
+    ]
+  },
+
+  {
+    id: 4, type: "vocabulary",
+    title: "Poderes de Batalha", titleEn: "Battle Powers",
+    description: "Aprenda as ações dos heróis em batalha!",
+    icon: "💥", color: "#e74c3c", xpReward: 70,
+    words: [
+      { en: "Run",     pt: "Correr",   emoji: "🏃", example: "Run! The enemy is near!",            examplePt: "Corra! O inimigo está perto!" },
+      { en: "Jump",    pt: "Pular",    emoji: "🦘", example: "Jump over the obstacle!",             examplePt: "Pule sobre o obstáculo!" },
+      { en: "Fight",   pt: "Lutar",    emoji: "🥊", example: "Fight with all your strength!",       examplePt: "Lute com toda sua força!" },
+      { en: "Win",     pt: "Vencer",   emoji: "🏆", example: "I will win this battle!",             examplePt: "Eu vou vencer essa batalha!" },
+      { en: "Train",   pt: "Treinar",  emoji: "💪", example: "Train every day to get stronger!",    examplePt: "Treine todo dia para ficar mais forte!" },
+      { en: "Protect", pt: "Proteger", emoji: "🛡️", example: "I protect my friends!",              examplePt: "Eu protejo meus amigos!" },
+      { en: "Attack",  pt: "Atacar",   emoji: "⚡", example: "Attack with your best move!",         examplePt: "Ataque com seu melhor golpe!" },
+      { en: "Defend",  pt: "Defender", emoji: "🛡️", example: "Defend the village!",                examplePt: "Defenda a vila!" },
+    ]
+  },
+
+  {
+    id: 5, type: "vocabulary",
+    title: "O Banquete do Herói", titleEn: "The Hero's Feast",
+    description: "Todo herói precisa comer! Aprenda as comidas!",
+    icon: "🍜", color: "#f39c12", xpReward: 70,
+    words: [
+      { en: "Water", pt: "Água",  emoji: "💧", example: "Water gives me energy!",              examplePt: "A água me dá energia!" },
+      { en: "Rice",  pt: "Arroz", emoji: "🍚", example: "I love rice after training!",          examplePt: "Adoro arroz depois do treino!" },
+      { en: "Bread", pt: "Pão",   emoji: "🍞", example: "Bread makes me stronger!",             examplePt: "O pão me deixa mais forte!" },
+      { en: "Meat",  pt: "Carne", emoji: "🥩", example: "Meat gives me power!",                 examplePt: "A carne me dá poder!" },
+      { en: "Ramen", pt: "Lámen", emoji: "🍜", example: "Ramen is my favorite!",                examplePt: "Lámen é meu favorito!" },
+      { en: "Fruit", pt: "Fruta", emoji: "🍎", example: "Eat fruit to be healthy!",             examplePt: "Coma fruta para ser saudável!" },
+      { en: "Milk",  pt: "Leite", emoji: "🥛", example: "Milk makes you grow fast!",            examplePt: "Leite faz você crescer rápido!" },
+      { en: "Tea",   pt: "Chá",   emoji: "🍵", example: "Tea calms the warrior mind.",          examplePt: "O chá acalma a mente do guerreiro." },
+    ]
+  },
+
+  {
+    id: 6, type: "vocabulary",
+    title: "Sentimentos do Ninja", titleEn: "Ninja Feelings",
+    description: "Mesmo ninjas têm sentimentos! Aprenda a expressá-los!",
+    icon: "😊", color: "#1abc9c", xpReward: 80,
+    words: [
+      { en: "Happy",   pt: "Feliz",      emoji: "😄", example: "I am happy when I win!",            examplePt: "Fico feliz quando ganho!" },
+      { en: "Sad",     pt: "Triste",     emoji: "😢", example: "I am sad when I lose.",             examplePt: "Fico triste quando perco." },
+      { en: "Angry",   pt: "Com raiva",  emoji: "😠", example: "Do not make me angry!",             examplePt: "Não me deixe com raiva!" },
+      { en: "Scared",  pt: "Com medo",   emoji: "😨", example: "I am scared of nothing!",           examplePt: "Não tenho medo de nada!" },
+      { en: "Strong",  pt: "Forte",      emoji: "💪", example: "I feel strong today!",              examplePt: "Me sinto forte hoje!" },
+      { en: "Tired",   pt: "Cansado",    emoji: "😴", example: "I am tired after battle.",          examplePt: "Estou cansado depois da batalha." },
+      { en: "Excited", pt: "Animado",    emoji: "🤩", example: "I am excited for the tournament!",  examplePt: "Estou animado para o torneio!" },
+      { en: "Brave",   pt: "Corajoso",   emoji: "🦁", example: "A true ninja is brave!",            examplePt: "Um verdadeiro ninja é corajoso!" },
+    ]
+  },
+
+  {
+    id: 7, type: "vocabulary",
+    title: "Partes da Casa", titleEn: "Parts of the House",
+    description: "Aprenda onde os guerreiros descansam e treinam!",
+    icon: "🏠", color: "#3498db", xpReward: 70,
+    words: [
+      { en: "Bedroom",     pt: "Quarto",   emoji: "🛏️", example: "My bedroom is my training room!",        examplePt: "Meu quarto é minha sala de treino!" },
+      { en: "Kitchen",     pt: "Cozinha",  emoji: "🍳", example: "I cook in the kitchen every morning.",   examplePt: "Eu cozinho na cozinha toda manhã." },
+      { en: "Bathroom",    pt: "Banheiro", emoji: "🚿", example: "I shower after every training session.", examplePt: "Tomo banho depois de cada treino." },
+      { en: "Living room", pt: "Sala",     emoji: "🛋️", example: "We watch anime in the living room!",    examplePt: "Assistimos anime na sala!" },
+      { en: "Door",        pt: "Porta",    emoji: "🚪", example: "Open the door, the hero is here!",      examplePt: "Abra a porta, o herói chegou!" },
+      { en: "Window",      pt: "Janela",   emoji: "🪟", example: "I see the stars from my window.",       examplePt: "Vejo as estrelas pela minha janela." },
+      { en: "Garden",      pt: "Jardim",   emoji: "🌿", example: "I train hard in the garden!",           examplePt: "Eu treino muito no jardim!" },
+      { en: "Stairs",      pt: "Escada",   emoji: "🪜", example: "Run up the stairs to get stronger!",    examplePt: "Suba as escadas para ficar mais forte!" },
+    ]
+  },
+
+  {
+    id: 8, type: "vocabulary",
+    title: "Animais Poderosos", titleEn: "Powerful Animals",
+    description: "Os animais mais incríveis que um ninja pode encontrar!",
+    icon: "🐉", color: "#8e44ad", xpReward: 70,
+    words: [
+      { en: "Dragon", pt: "Dragão", emoji: "🐉", example: "The dragon flies over the mountains!",  examplePt: "O dragão voa sobre as montanhas!" },
+      { en: "Wolf",   pt: "Lobo",   emoji: "🐺", example: "The wolf runs with the pack!",          examplePt: "O lobo corre com a matilha!" },
+      { en: "Eagle",  pt: "Águia",  emoji: "🦅", example: "The eagle sees everything from above!", examplePt: "A águia vê tudo lá de cima!" },
+      { en: "Tiger",  pt: "Tigre",  emoji: "🐯", example: "The tiger is fast and strong!",         examplePt: "O tigre é rápido e forte!" },
+      { en: "Snake",  pt: "Cobra",  emoji: "🐍", example: "The snake moves silently.",             examplePt: "A cobra se move silenciosamente." },
+      { en: "Fox",    pt: "Raposa", emoji: "🦊", example: "The fox is very clever!",               examplePt: "A raposa é muito esperta!" },
+      { en: "Bear",   pt: "Urso",   emoji: "🐻", example: "The bear is the strongest animal!",    examplePt: "O urso é o animal mais forte!" },
+      { en: "Lion",   pt: "Leão",   emoji: "🦁", example: "The lion is king of the jungle!",      examplePt: "O leão é o rei da selva!" },
+    ]
+  },
+
+  {
+    id: 9, type: "vocabulary",
+    title: "Corpo do Guerreiro", titleEn: "Warrior Body",
+    description: "Conheça as partes do corpo de um guerreiro poderoso!",
+    icon: "💪", color: "#c0392b", xpReward: 75,
+    words: [
+      { en: "Head",  pt: "Cabeça",   emoji: "🧠", example: "Use your head to think in battle!",  examplePt: "Use sua cabeça para pensar na batalha!" },
+      { en: "Eyes",  pt: "Olhos",    emoji: "👀", example: "My eyes see the enemy coming!",      examplePt: "Meus olhos veem o inimigo chegando!" },
+      { en: "Hands", pt: "Mãos",     emoji: "✋", example: "My hands are my weapons!",            examplePt: "Minhas mãos são minhas armas!" },
+      { en: "Arms",  pt: "Braços",   emoji: "💪", example: "Strong arms defeat every enemy!",    examplePt: "Braços fortes vencem qualquer inimigo!" },
+      { en: "Legs",  pt: "Pernas",   emoji: "🦵", example: "Fast legs help me run away!",        examplePt: "Pernas rápidas me ajudam a fugir!" },
+      { en: "Heart", pt: "Coração",  emoji: "❤️", example: "My heart never gives up!",           examplePt: "Meu coração nunca desiste!" },
+      { en: "Back",  pt: "Costas",   emoji: "🔙", example: "I protect my friends backs!",        examplePt: "Eu protejo as costas dos meus amigos!" },
+      { en: "Mouth", pt: "Boca",     emoji: "👄", example: "I shout the battle cry!",            examplePt: "Eu grito o grito de batalha!" },
+    ]
+  },
+
+  {
+    id: 10, type: "vocabulary",
+    title: "Família Ninja", titleEn: "Ninja Family",
+    description: "A família é a maior força de um ninja!",
+    icon: "👨‍👩‍👧", color: "#e67e22", xpReward: 70,
+    words: [
+      { en: "Father",      pt: "Pai",   emoji: "👨", example: "My father taught me to fight!",          examplePt: "Meu pai me ensinou a lutar!" },
+      { en: "Mother",      pt: "Mãe",   emoji: "👩", example: "My mother is my greatest hero!",         examplePt: "Minha mãe é meu maior herói!" },
+      { en: "Brother",     pt: "Irmão", emoji: "👦", example: "My brother trains with me every day!",   examplePt: "Meu irmão treina comigo todo dia!" },
+      { en: "Sister",      pt: "Irmã",  emoji: "👧", example: "My sister is very brave!",               examplePt: "Minha irmã é muito corajosa!" },
+      { en: "Grandfather", pt: "Avô",   emoji: "👴", example: "My grandfather is a legend!",            examplePt: "Meu avô é uma lenda!" },
+      { en: "Grandmother", pt: "Avó",   emoji: "👵", example: "My grandmother makes the best food!",    examplePt: "Minha avó faz a melhor comida!" },
+      { en: "Friend",      pt: "Amigo", emoji: "🤝", example: "My friend fights by my side!",           examplePt: "Meu amigo luta ao meu lado!" },
+      { en: "Master",      pt: "Mestre",emoji: "🧙", example: "My master is very wise!",                examplePt: "Meu mestre é muito sábio!" },
+    ]
+  },
+
+  {
+    id: 11, type: "vocabulary",
+    title: "Na Escola dos Heróis", titleEn: "Hero School",
+    description: "Todo herói precisa estudar! Vocabulário da escola!",
+    icon: "📚", color: "#27ae60", xpReward: 75,
+    words: [
+      { en: "Book",    pt: "Livro",      emoji: "📖", example: "I read the book about ninja techniques!", examplePt: "Eu li o livro sobre técnicas ninja!" },
+      { en: "Pencil",  pt: "Lápis",      emoji: "✏️", example: "I draw battle plans with my pencil!",    examplePt: "Eu desenho planos de batalha com meu lápis!" },
+      { en: "Teacher", pt: "Professor",  emoji: "👨‍🏫", example: "My teacher knows everything!",          examplePt: "Meu professor sabe tudo!" },
+      { en: "School",  pt: "Escola",     emoji: "🏫", example: "My school is the best ninja academy!",   examplePt: "Minha escola é a melhor academia ninja!" },
+      { en: "Study",   pt: "Estudar",    emoji: "📝", example: "I study to become stronger!",            examplePt: "Eu estudo para ficar mais forte!" },
+      { en: "Learn",   pt: "Aprender",   emoji: "🧠", example: "I learn something new every day!",       examplePt: "Eu aprendo algo novo todo dia!" },
+      { en: "Write",   pt: "Escrever",   emoji: "✍️", example: "I write my training notes every day.",   examplePt: "Eu escrevo minhas anotações de treino todo dia." },
+      { en: "Read",    pt: "Ler",        emoji: "👁️", example: "I read the secret scroll!",              examplePt: "Eu li o pergaminho secreto!" },
+    ]
+  },
+
+  {
+    id: 12, type: "vocabulary",
+    title: "Clima da Batalha", titleEn: "Battle Weather",
+    description: "Ninjas lutam em qualquer clima! Aprenda sobre o tempo!",
+    icon: "⛈️", color: "#2980b9", xpReward: 75,
+    words: [
+      { en: "Sun",       pt: "Sol",        emoji: "☀️",  example: "The sun gives me energy to fight!",   examplePt: "O sol me dá energia para lutar!" },
+      { en: "Rain",      pt: "Chuva",      emoji: "🌧️",  example: "I train even in the rain!",           examplePt: "Eu treino até mesmo na chuva!" },
+      { en: "Wind",      pt: "Vento",      emoji: "💨",  example: "The wind carries my speed!",           examplePt: "O vento carrega minha velocidade!" },
+      { en: "Storm",     pt: "Tempestade", emoji: "⛈️",  example: "I was born in the storm!",            examplePt: "Eu nasci na tempestade!" },
+      { en: "Snow",      pt: "Neve",       emoji: "❄️",  example: "Snow makes the battlefield silent.",  examplePt: "A neve torna o campo de batalha silencioso." },
+      { en: "Cloud",     pt: "Nuvem",      emoji: "☁️",  example: "I hide in the clouds like a ninja!",  examplePt: "Eu me escondo nas nuvens como um ninja!" },
+      { en: "Lightning", pt: "Relâmpago",  emoji: "⚡",  example: "I am as fast as lightning!",          examplePt: "Eu sou tão rápido quanto o relâmpago!" },
+      { en: "Fog",       pt: "Neblina",    emoji: "🌫️",  example: "Ninjas disappear in the fog!",        examplePt: "Ninjas desaparecem na neblina!" },
+    ]
+  },
+
+  {
+    id: 13, type: "vocabulary",
+    title: "Opostos de Poder", titleEn: "Power Opposites",
+    description: "Aprenda os opostos — como yin e yang!",
+    icon: "☯️", color: "#7f8c8d", xpReward: 75,
+    words: [
+      { en: "Big",    pt: "Grande",  emoji: "🏔️", example: "The dragon is big and powerful!",   examplePt: "O dragão é grande e poderoso!" },
+      { en: "Small",  pt: "Pequeno", emoji: "🐭", example: "Even small heroes are strong!",     examplePt: "Até heróis pequenos são fortes!" },
+      { en: "Fast",   pt: "Rápido",  emoji: "⚡", example: "I am fast like the wind!",          examplePt: "Eu sou rápido como o vento!" },
+      { en: "Slow",   pt: "Devagar", emoji: "🐌", example: "A slow enemy is an easy target!",  examplePt: "Um inimigo devagar é um alvo fácil!" },
+      { en: "Hot",    pt: "Quente",  emoji: "🔥", example: "Fire is very hot!",                 examplePt: "O fogo é muito quente!" },
+      { en: "Cold",   pt: "Frio",    emoji: "🧊", example: "Ice is cold and sharp!",            examplePt: "O gelo é frio e afiado!" },
+      { en: "Light",  pt: "Leve",    emoji: "🪶", example: "A ninja must be light on his feet!", examplePt: "Um ninja deve ser leve nos pés!" },
+      { en: "Heavy",  pt: "Pesado",  emoji: "⚓", example: "My training weights are heavy!",   examplePt: "Meus pesos de treino são pesados!" },
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // GRAMÁTICA
+  // ─────────────────────────────────────────────────────────────────────────
+
+  {
+    id: 14, type: "grammar",
+    title: "To Be — Eu Sou um Ninja!", titleEn: "To Be — Affirmative",
+    description: "Aprenda a dizer 'sou', 'é' e 'somos' em inglês!",
+    icon: "🔵", color: "#3498db", xpReward: 90,
+    grammarOptions: ["am", "is", "are", "be"],
+    grammarTip: "I → am | He/She/It → is | You/We/They → are",
+    words: [
+      { en: "I ___ a ninja",      pt: "am",  emoji: "🥷", example: "I am a ninja! I am strong!", examplePt: "Eu sou um ninja! Eu sou forte!", rule: "Com 'I' → sempre 'am'" },
+      { en: "You ___ my friend",  pt: "are", emoji: "🤝", example: "You are my best friend!",    examplePt: "Você é meu melhor amigo!",      rule: "Com 'You' → sempre 'are'" },
+      { en: "He ___ the hero",    pt: "is",  emoji: "🦸", example: "He is the hero of the village!", examplePt: "Ele é o herói da vila!",   rule: "Com 'He' → sempre 'is'" },
+      { en: "She ___ very fast",  pt: "is",  emoji: "⚡", example: "She is very fast in battle!", examplePt: "Ela é muito rápida na batalha!", rule: "Com 'She' → sempre 'is'" },
+      { en: "We ___ warriors",    pt: "are", emoji: "⚔️", example: "We are the strongest warriors!", examplePt: "Nós somos os guerreiros mais fortes!", rule: "Com 'We' → sempre 'are'" },
+      { en: "They ___ powerful",  pt: "are", emoji: "💥", example: "They are very powerful enemies!", examplePt: "Eles são inimigos muito poderosos!", rule: "Com 'They' → sempre 'are'" },
+      { en: "It ___ a dragon",    pt: "is",  emoji: "🐉", example: "It is a huge dragon!",       examplePt: "É um dragão enorme!",            rule: "Com 'It' → sempre 'is'" },
+      { en: "I ___ the champion", pt: "am",  emoji: "🏆", example: "I am the champion!",         examplePt: "Eu sou o campeão!",              rule: "Com 'I' → sempre 'am'" },
+    ]
+  },
+
+  {
+    id: 15, type: "grammar",
+    title: "To Be — Negativo!", titleEn: "To Be — Negative",
+    description: "Aprenda a negar com o verbo To Be — 'Não sou fraco!'",
+    icon: "🔴", color: "#e74c3c", xpReward: 90,
+    grammarOptions: ["am not", "is not", "are not", "was not"],
+    grammarTip: "I am not | He/She/It is not | You/We/They are not",
+    words: [
+      { en: "I ___ weak",           pt: "am not",  emoji: "💪", example: "I am not weak! I am strong!",          examplePt: "Eu não sou fraco! Eu sou forte!",    rule: "I + am not = negativo" },
+      { en: "He ___ my enemy",      pt: "is not",  emoji: "🤜", example: "He is not my enemy!",                  examplePt: "Ele não é meu inimigo!",             rule: "He/She + is not = negativo" },
+      { en: "We ___ afraid",        pt: "are not", emoji: "🦁", example: "We are not afraid of anything!",       examplePt: "Não temos medo de nada!",            rule: "We/They + are not = negativo" },
+      { en: "She ___ the villain",  pt: "is not",  emoji: "😇", example: "She is not the villain!",              examplePt: "Ela não é a vilã!",                  rule: "She + is not = negativo" },
+      { en: "They ___ our allies",  pt: "are not", emoji: "⚔️", example: "They are not our allies! Attack!",     examplePt: "Eles não são nossos aliados! Ataque!", rule: "They + are not = negativo" },
+      { en: "I ___ giving up",      pt: "am not",  emoji: "🔥", example: "I am not giving up! Never!",           examplePt: "Eu não vou desistir! Nunca!",         rule: "I + am not = negativo" },
+      { en: "You ___ alone",        pt: "are not", emoji: "🤝", example: "You are not alone! I am here!",        examplePt: "Você não está sozinho! Estou aqui!", rule: "You + are not = negativo" },
+      { en: "It ___ over yet",      pt: "is not",  emoji: "⏳", example: "It is not over yet! Keep fighting!",   examplePt: "Ainda não acabou! Continue lutando!", rule: "It + is not = negativo" },
+    ]
+  },
+
+  {
+    id: 16, type: "grammar",
+    title: "To Be — Perguntas!", titleEn: "To Be — Questions",
+    description: "Aprenda a fazer perguntas com o verbo To Be!",
+    icon: "❓", color: "#8e44ad", xpReward: 90,
+    grammarOptions: ["Am I", "Is he", "Is she", "Are you", "Are they", "Are we"],
+    grammarTip: "Para perguntar: inverta sujeito e verbo → Are you...? / Is he...?",
+    words: [
+      { en: "___ ready?",          pt: "Are you",  emoji: "🎯", example: "Are you ready for the battle?",    examplePt: "Você está pronto para a batalha?", rule: "Pergunta com 'you' → Are you...?" },
+      { en: "___ strong?",         pt: "Am I",     emoji: "💪", example: "Am I strong enough to fight?",    examplePt: "Eu sou forte o suficiente para lutar?", rule: "Pergunta com 'I' → Am I...?" },
+      { en: "___ the hero?",       pt: "Is he",    emoji: "🦸", example: "Is he the real hero?",            examplePt: "Ele é o verdadeiro herói?",         rule: "Pergunta com 'he' → Is he...?" },
+      { en: "___ a villain?",      pt: "Is she",   emoji: "😈", example: "Is she a villain or a hero?",     examplePt: "Ela é uma vilã ou uma heroína?",    rule: "Pergunta com 'she' → Is she...?" },
+      { en: "___ ninjas?",         pt: "Are they", emoji: "🥷", example: "Are they real ninjas?",           examplePt: "Eles são ninjas de verdade?",        rule: "Pergunta com 'they' → Are they...?" },
+      { en: "___ a good team?",    pt: "Are we",   emoji: "⚔️", example: "Are we a good team?",            examplePt: "Nós somos uma boa equipe?",          rule: "Pergunta com 'we' → Are we...?" },
+      { en: "___ the strongest?",  pt: "Is he",    emoji: "🏆", example: "Is he the strongest warrior?",   examplePt: "Ele é o guerreiro mais forte?",      rule: "Pergunta com 'he' → Is he...?" },
+      { en: "___ winning?",        pt: "Are we",   emoji: "🎉", example: "Are we winning this fight?",     examplePt: "Estamos vencendo essa luta?",        rule: "Pergunta com 'we' → Are we...?" },
+    ]
+  },
+
+  {
+    id: 17, type: "grammar",
+    title: "Verbo To Have — Ter Poder!", titleEn: "Verb To Have",
+    description: "Aprenda a dizer o que você tem e possui!",
+    icon: "🟢", color: "#27ae60", xpReward: 90,
+    grammarOptions: ["have", "has", "had", "having"],
+    grammarTip: "I/You/We/They → have | He/She/It → has",
+    words: [
+      { en: "I ___ a sword",       pt: "have", emoji: "⚔️", example: "I have a powerful sword!",           examplePt: "Eu tenho uma espada poderosa!",        rule: "I → have" },
+      { en: "He ___ a dragon",     pt: "has",  emoji: "🐉", example: "He has a dragon as his partner!",    examplePt: "Ele tem um dragão como parceiro!",      rule: "He → has" },
+      { en: "She ___ great power", pt: "has",  emoji: "✨", example: "She has great power inside her!",    examplePt: "Ela tem um grande poder dentro dela!",  rule: "She → has" },
+      { en: "We ___ friends",      pt: "have", emoji: "🤝", example: "We have great friends by our side!", examplePt: "Temos ótimos amigos ao nosso lado!",    rule: "We → have" },
+      { en: "They ___ a plan",     pt: "have", emoji: "📋", example: "They have a secret plan!",           examplePt: "Eles têm um plano secreto!",            rule: "They → have" },
+      { en: "It ___ sharp claws",  pt: "has",  emoji: "🐾", example: "It has very sharp claws!",           examplePt: "Ele tem garras muito afiadas!",         rule: "It → has" },
+      { en: "You ___ my trust",    pt: "have", emoji: "🙏", example: "You have my complete trust!",        examplePt: "Você tem minha total confiança!",       rule: "You → have" },
+      { en: "He ___ no fear",      pt: "has",  emoji: "😤", example: "He has no fear at all!",             examplePt: "Ele não tem medo algum!",               rule: "He → has" },
+    ]
+  },
+
+  {
+    id: 18, type: "grammar",
+    title: "Presente Simples — Ações!", titleEn: "Simple Present",
+    description: "Ações de rotina! 'He trains' ou 'He train'? Descubra!",
+    icon: "🟡", color: "#f39c12", xpReward: 95,
+    grammarOptions: ["train", "trains", "run", "runs"],
+    grammarTip: "I/You/We/They → verbo normal | He/She/It → verbo + S",
+    words: [
+      { en: "I ___ every day",         pt: "train",  emoji: "💪", example: "I train every day to get stronger!",   examplePt: "Eu treino todo dia para ficar mais forte!", rule: "'I' → sem 's' (train)" },
+      { en: "He ___ very hard",        pt: "trains", emoji: "🏋️", example: "He trains very hard!",                 examplePt: "Ele treina muito!",                        rule: "'He' → com 's' (trains)" },
+      { en: "She ___ every morning",   pt: "runs",   emoji: "🏃", example: "She runs every morning!",              examplePt: "Ela corre toda manhã!",                     rule: "'She' → com 's' (runs)" },
+      { en: "We ___ together",         pt: "run",    emoji: "👥", example: "We run together as a team!",           examplePt: "Nós corremos juntos como uma equipe!",      rule: "'We' → sem 's' (run)" },
+      { en: "They ___ in the park",    pt: "run",    emoji: "🌳", example: "They run in the park every day!",      examplePt: "Eles correm no parque todo dia!",           rule: "'They' → sem 's' (run)" },
+      { en: "He ___ faster than me",   pt: "runs",   emoji: "⚡", example: "He runs faster than me!",              examplePt: "Ele corre mais rápido que eu!",             rule: "'He' → com 's' (runs)" },
+      { en: "She ___ at the gym",      pt: "trains", emoji: "🥋", example: "She trains at the dojo!",              examplePt: "Ela treina no dojo!",                       rule: "'She' → com 's' (trains)" },
+      { en: "You ___ with me",         pt: "train",  emoji: "🤜", example: "You train with me every week!",        examplePt: "Você treina comigo toda semana!",           rule: "'You' → sem 's' (train)" },
+    ]
+  },
+
+  {
+    id: 19, type: "grammar",
+    title: "Artigos: A / An / The", titleEn: "Articles: A / An / The",
+    description: "Aprenda quando usar 'a', 'an' e 'the' em inglês!",
+    icon: "🟠", color: "#e67e22", xpReward: 90,
+    grammarOptions: ["a", "an", "the", "—"],
+    grammarTip: "a + consoante | an + vogal (a,e,i,o,u) | the = específico/único",
+    words: [
+      { en: "I am ___ ninja",             pt: "a",   emoji: "🥷", example: "I am a ninja! A real one!",        examplePt: "Eu sou um ninja! Um de verdade!",      rule: "'ninja' começa com 'n' → use 'a'" },
+      { en: "He has ___ eagle",           pt: "an",  emoji: "🦅", example: "He has an eagle as companion!",    examplePt: "Ele tem uma águia como companheira!",  rule: "'eagle' começa com 'e' (vogal) → use 'an'" },
+      { en: "I see ___ dragon over there",pt: "the", emoji: "🐉", example: "I see the dragon over there!",     examplePt: "Eu vejo o dragão lá!",                 rule: "Dragão específico → use 'the'" },
+      { en: "She is ___ hero",            pt: "a",   emoji: "🦸", example: "She is a real hero!",              examplePt: "Ela é uma heroína de verdade!",        rule: "'hero' começa com 'h' → use 'a'" },
+      { en: "Look at ___ sun!",           pt: "the", emoji: "☀️", example: "Look at the sun! It is bright!",   examplePt: "Olha para o sol! Ele está brilhante!", rule: "Só existe um sol → use 'the'" },
+      { en: "I need ___ ally",            pt: "an",  emoji: "🤝", example: "I need an ally in this battle!",   examplePt: "Preciso de um aliado nessa batalha!",  rule: "'ally' começa com 'a' (vogal) → use 'an'" },
+      { en: "He found ___ sword",         pt: "a",   emoji: "⚔️", example: "He found a magical sword!",        examplePt: "Ele encontrou uma espada mágica!",     rule: "'sword' começa com 's' → use 'a'" },
+      { en: "I pet ___ wolf",             pt: "the", emoji: "🐺", example: "I pet the wolf every morning!",    examplePt: "Eu afago o lobo toda manhã!",          rule: "Lobo específico → use 'the'" },
+    ]
+  },
+
+  {
+    id: 20, type: "grammar",
+    title: "Perguntas: What / Where / Who", titleEn: "Question Words",
+    description: "Aprenda a fazer perguntas em inglês como um detetive ninja!",
+    icon: "🟣", color: "#9b59b6", xpReward: 95,
+    grammarOptions: ["What", "Where", "Who", "When"],
+    grammarTip: "What = O quê/Qual | Where = Onde | Who = Quem | When = Quando",
+    words: [
+      { en: "___ is your power?",    pt: "What",  emoji: "✨", example: "What is your special power?",           examplePt: "Qual é o seu poder especial?",            rule: "Coisa/poder → What" },
+      { en: "___ is the enemy?",     pt: "Where", emoji: "🗺️", example: "Where is the enemy hiding?",            examplePt: "Onde está o inimigo se escondendo?",      rule: "Lugar → Where" },
+      { en: "___ is the strongest?", pt: "Who",   emoji: "🏆", example: "Who is the strongest warrior here?",    examplePt: "Quem é o guerreiro mais forte aqui?",     rule: "Pessoa → Who" },
+      { en: "___ is your name?",     pt: "What",  emoji: "📛", example: "What is your name, warrior?",           examplePt: "Qual é o seu nome, guerreiro?",           rule: "Nome/coisa → What" },
+      { en: "___ is the master?",    pt: "Who",   emoji: "🧙", example: "Who is the master of this dojo?",       examplePt: "Quem é o mestre deste dojo?",             rule: "Pessoa → Who" },
+      { en: "___ do you train?",     pt: "Where", emoji: "🏠", example: "Where do you train every day?",         examplePt: "Onde você treina todo dia?",              rule: "Lugar → Where" },
+      { en: "___ is a ninja?",       pt: "What",  emoji: "🥷", example: "What is a true ninja?",                 examplePt: "O que é um verdadeiro ninja?",            rule: "Definição/coisa → What" },
+      { en: "___ is the battle?",    pt: "When",  emoji: "⏰", example: "When is the final battle?",             examplePt: "Quando é a batalha final?",               rule: "Tempo → When" },
+    ]
+  },
+
+  {
+    id: 21, type: "grammar",
+    title: "Plural — Mais Guerreiros!", titleEn: "Plural Forms",
+    description: "Aprenda como transformar uma palavra em muitas!",
+    icon: "👥", color: "#16a085", xpReward: 95,
+    grammarOptions: ["ninjas", "wolves", "heroes", "dragons", "enemies", "swords", "allies", "warriors"],
+    grammarTip: "Maioria: + s (ninja→ninjas) | Especial: wolf→wolves, hero→heroes",
+    words: [
+      { en: "one ninja → two ___",    pt: "ninjas",   emoji: "🥷", example: "Two ninjas protect the village!", examplePt: "Dois ninjas protegem a vila!",         rule: "ninja + s = ninjas" },
+      { en: "one wolf → three ___",   pt: "wolves",   emoji: "🐺", example: "Three wolves attack at night!",   examplePt: "Três lobos atacam à noite!",           rule: "wolf → wolves (irregular!)" },
+      { en: "one hero → five ___",    pt: "heroes",   emoji: "🦸", example: "Five heroes stand together!",     examplePt: "Cinco heróis ficam juntos!",           rule: "hero → heroes (irregular!)" },
+      { en: "one dragon → two ___",   pt: "dragons",  emoji: "🐉", example: "Two dragons fly over us!",        examplePt: "Dois dragões voam sobre nós!",         rule: "dragon + s = dragons" },
+      { en: "one enemy → many ___",   pt: "enemies",  emoji: "😈", example: "Many enemies surround us!",       examplePt: "Muitos inimigos nos cercam!",          rule: "enemy → enemies (y→ies)" },
+      { en: "one sword → ten ___",    pt: "swords",   emoji: "⚔️", example: "Ten swords light up the sky!",   examplePt: "Dez espadas iluminam o céu!",          rule: "sword + s = swords" },
+      { en: "one ally → four ___",    pt: "allies",   emoji: "🤝", example: "Four allies join the fight!",     examplePt: "Quatro aliados entram na luta!",       rule: "ally → allies (y→ies)" },
+      { en: "one warrior → six ___",  pt: "warriors", emoji: "🛡️", example: "Six warriors block the gate!",   examplePt: "Seis guerreiros bloqueiam o portão!", rule: "warrior + s = warriors" },
+    ]
+  },
+
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Conquistas
+// ─────────────────────────────────────────────────────────────────────────────
+const ACHIEVEMENTS = [
+  // Progresso
+  { id: "first_lesson",   title: "Primeiro Passo",         desc: "Complete sua primeira lição!",              icon: "🌟", condition: s => s.lessonsCompleted >= 1 },
+  { id: "three_lessons",  title: "Em Treinamento",         desc: "Complete 3 lições!",                        icon: "🥋", condition: s => s.lessonsCompleted >= 3 },
+  { id: "ten_lessons",    title: "Guerreiro Dedicado",     desc: "Complete 10 lições!",                       icon: "⚔️", condition: s => s.lessonsCompleted >= 10 },
+  { id: "all_vocab",      title: "Mestre do Vocabulário",  desc: "Complete todos os episódios de vocabulário!", icon: "📚", condition: s => EPISODES.filter(e => e.type === "vocabulary").every(e => s.completedEpisodes.includes(e.id)) },
+  { id: "first_grammar",  title: "Estudante de Gramática", desc: "Complete sua primeira lição de gramática!",  icon: "📝", condition: s => EPISODES.filter(e => e.type === "grammar").some(e => s.completedEpisodes.includes(e.id)) },
+  { id: "all_grammar",    title: "Mestre da Gramática",    desc: "Complete todos os episódios de gramática!",  icon: "🎓", condition: s => EPISODES.filter(e => e.type === "grammar").every(e => s.completedEpisodes.includes(e.id)) },
+  { id: "all_episodes",   title: "Lenda Ninja",            desc: "Complete todos os 21 episódios!",            icon: "👑", condition: s => s.completedEpisodes.length >= EPISODES.length },
+  // Desempenho
+  { id: "perfect_score",  title: "Perfeição Suprema",      desc: "Acerte tudo em uma lição!",                 icon: "💯", condition: s => s.perfectLessons >= 1 },
+  { id: "three_perfect",  title: "Mestre da Precisão",     desc: "Faça 3 lições perfeitas!",                  icon: "🎯", condition: s => s.perfectLessons >= 3 },
+  { id: "streak_5",       title: "Série de Fogo",          desc: "Acerte 5 seguidos!",                        icon: "🔥", condition: s => s.bestStreak >= 5 },
+  { id: "streak_10",      title: "Série Imparável",        desc: "Acerte 10 seguidos!",                       icon: "⚡", condition: s => s.bestStreak >= 10 },
+  // XP
+  { id: "xp_100",         title: "Poder Crescente",        desc: "Alcance 100 XP!",                           icon: "💫", condition: s => s.totalXP >= 100 },
+  { id: "xp_500",         title: "Guerreiro Poderoso",     desc: "Alcance 500 XP!",                           icon: "🌀", condition: s => s.totalXP >= 500 },
+  { id: "xp_1000",        title: "Lenda Imortal",          desc: "Alcance 1000 XP!",                          icon: "🏆", condition: s => s.totalXP >= 1000 },
+];
+
+  </script>
+  <script>
+// AnimeEnglish — App Logic
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let state = {
+  screen: "home",
+  currentEpisode: null,
+  lessonPhase: "study",   // study | quiz
+  studyIndex: 0,
+  quizWords: [],
+  quizIndex: 0,
+  quizScore: 0,
+  streak: 0,
+  resultData: null,
+  episodeFilter: "all",   // all | vocabulary | grammar
+  stats: loadStats(),
+};
+
+function loadStats() {
+  try { return JSON.parse(localStorage.getItem("animenglish_stats")) || defaultStats(); }
+  catch { return defaultStats(); }
+}
+function defaultStats() {
+  return { totalXP: 0, level: 1, lessonsCompleted: 0, perfectLessons: 0,
+           bestStreak: 0, completedEpisodes: [], unlockedAchievements: [] };
+}
+function saveStats() {
+  localStorage.setItem("animenglish_stats", JSON.stringify(state.stats));
+}
+
+// ─── Speech ───────────────────────────────────────────────────────────────────
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = "en-US"; utt.rate = 0.85;
+  const v = window.speechSynthesis.getVoices().find(v => v.lang.startsWith("en"));
+  if (v) utt.voice = v;
+  window.speechSynthesis.speak(utt);
+}
+
+// ─── XP & Level ───────────────────────────────────────────────────────────────
+function addXP(amount) {
+  state.stats.totalXP += amount;
+  const newLevel = Math.floor(state.stats.totalXP / 100) + 1;
+  const levelUp = newLevel > state.stats.level;
+  state.stats.level = newLevel;
+  return levelUp;
+}
+function getXPProgress() {
+  const cur = state.stats.totalXP % 100;
+  return { current: cur, pct: cur };
+}
+
+// ─── Achievements ─────────────────────────────────────────────────────────────
+function checkAchievements() {
+  const newOnes = [];
+  for (const a of ACHIEVEMENTS) {
+    if (!state.stats.unlockedAchievements.includes(a.id) && a.condition(state.stats)) {
+      state.stats.unlockedAchievements.push(a.id);
+      newOnes.push(a);
+    }
+  }
+  return newOnes;
+}
+
+// ─── Render Router ────────────────────────────────────────────────────────────
+const app = document.getElementById("app");
+function render() {
+  switch (state.screen) {
+    case "home":           renderHome(); break;
+    case "episode-select": renderEpisodeSelect(); break;
+    case "lesson":         renderLesson(); break;
+    case "result":         renderResult(); break;
+    case "achievements":   renderAchievements(); break;
+  }
+}
+
+// ─── Home ─────────────────────────────────────────────────────────────────────
+function renderHome() {
+  const { level, totalXP } = state.stats;
+  const xp = getXPProgress();
+  const vocabDone = EPISODES.filter(e => e.type === "vocabulary" && state.stats.completedEpisodes.includes(e.id)).length;
+  const grammarDone = EPISODES.filter(e => e.type === "grammar" && state.stats.completedEpisodes.includes(e.id)).length;
+  app.innerHTML = `
+    <div class="screen home-screen">
+      <div class="home-bg-deco">
+        <span class="deco-kanji">英語</span>
+        <span class="deco-kanji2">忍者</span>
+      </div>
+      <div class="home-header">
+        <div class="title-block">
+          <span class="title-jp">アニメ</span>
+          <h1 class="main-title">AnimeEnglish</h1>
+          <p class="subtitle">Aprenda inglês como um verdadeiro ninja! ⚔️</p>
+        </div>
+        <div class="mascot">
+          <div class="mascot-body">🥷</div>
+          <div class="mascot-bubble">Vamos aprender juntos!</div>
+        </div>
+      </div>
+      <div class="player-card">
+        <div class="player-info">
+          <div class="player-level">Nível ${level}</div>
+          <div class="player-name">Aprendiz Ninja</div>
+        </div>
+        <div class="xp-bar-label">${totalXP} XP total</div>
+        <div class="xp-bar"><div class="xp-fill" style="width:${xp.pct}%"></div></div>
+        <div class="xp-bar-sub">${xp.current}/100 XP para o próximo nível</div>
+      </div>
+      <div class="home-progress-row">
+        <div class="home-prog-item">
+          <div class="home-prog-icon">📖</div>
+          <div class="home-prog-val">${vocabDone}/${EPISODES.filter(e=>e.type==="vocabulary").length}</div>
+          <div class="home-prog-label">Vocabulário</div>
+        </div>
+        <div class="home-prog-item">
+          <div class="home-prog-icon">📝</div>
+          <div class="home-prog-val">${grammarDone}/${EPISODES.filter(e=>e.type==="grammar").length}</div>
+          <div class="home-prog-label">Gramática</div>
+        </div>
+        <div class="home-prog-item">
+          <div class="home-prog-icon">🔥</div>
+          <div class="home-prog-val">${state.stats.bestStreak}</div>
+          <div class="home-prog-label">Melhor Série</div>
+        </div>
+        <div class="home-prog-item">
+          <div class="home-prog-icon">🏆</div>
+          <div class="home-prog-val">${state.stats.unlockedAchievements.length}/${ACHIEVEMENTS.length}</div>
+          <div class="home-prog-label">Conquistas</div>
+        </div>
+      </div>
+      <div class="home-buttons">
+        <button class="btn btn-primary btn-large" onclick="goTo('episode-select')">⚔️ Iniciar Missão</button>
+        <button class="btn btn-secondary" onclick="goTo('achievements')">🏆 Ver Conquistas</button>
+      </div>
+    </div>`;
+}
+
+// ─── Episode Select ───────────────────────────────────────────────────────────
+function renderEpisodeSelect() {
+  const f = state.episodeFilter;
+  const tabs = ["all","vocabulary","grammar"].map(t => {
+    const label = t === "all" ? "🗺️ Todos" : t === "vocabulary" ? "📖 Vocabulário" : "📝 Gramática";
+    return `<button class="ep-tab ${f===t?"active":""}" onclick="setFilter('${t}')">${label}</button>`;
+  }).join("");
+
+  const list = EPISODES.filter(ep => f === "all" || ep.type === f);
+  const cards = list.map((ep, _i) => {
+    const realIdx = EPISODES.indexOf(ep);
+    const done = state.stats.completedEpisodes.includes(ep.id);
+    const badge = ep.type === "grammar"
+      ? `<span class="ep-type-badge grammar-badge">📝 GRAMÁTICA</span>`
+      : `<span class="ep-type-badge vocab-badge">📖 VOCABULÁRIO</span>`;
+    return `
+      <div class="episode-card ${done?"done":""}" onclick="startEpisode(${realIdx})" style="--ep-color:${ep.color}">
+        <div class="ep-card-top">
+          <div class="ep-icon">${ep.icon}</div>
+          ${badge}
+        </div>
+        <div class="ep-num">Episódio ${ep.id}</div>
+        <div class="ep-title">${ep.title}</div>
+        <div class="ep-title-en">${ep.titleEn}</div>
+        <div class="ep-desc">${ep.description}</div>
+        <div class="ep-footer">
+          <span class="ep-xp">+${ep.xpReward} XP</span>
+          <span class="ep-words">${ep.words.length} exercícios</span>
+          ${done ? '<span class="ep-done-badge">✅ Concluído</span>' : '<span class="ep-start">Jogar →</span>'}
+        </div>
+      </div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="screen episode-screen">
+      <div class="screen-header">
+        <button class="btn-back" onclick="goTo('home')">← Voltar</button>
+        <h2>Escolha seu Episódio</h2>
+      </div>
+      <div class="ep-tabs-wrap">${tabs}</div>
+      <div class="episode-grid">${cards}</div>
+    </div>`;
+}
+
+function setFilter(f) {
+  state.episodeFilter = f;
+  renderEpisodeSelect();
+}
+
+// ─── Lesson ───────────────────────────────────────────────────────────────────
+function startEpisode(index) {
+  state.currentEpisode = EPISODES[index];
+  state.lessonPhase = "study";
+  state.studyIndex = 0;
+  state.quizScore = 0;
+  state.streak = 0;
+  state.quizWords = shuffle([...state.currentEpisode.words]);
+  state.quizIndex = 0;
+  state.screen = "lesson";
+  render();
+}
+
+function renderLesson() {
+  state.lessonPhase === "study" ? renderStudyCard() : renderQuiz();
+}
+
+// ─── Study Card ───────────────────────────────────────────────────────────────
+function renderStudyCard() {
+  const ep = state.currentEpisode;
+  const word = ep.words[state.studyIndex];
+  const total = ep.words.length;
+  const progress = ((state.studyIndex + 1) / total) * 100;
+  const isGrammar = ep.type === "grammar";
+
+  let cardHtml;
+  if (isGrammar) {
+    const sentenceHL = word.en.replace("___", `<span class="answer-hl">${word.pt}</span>`);
+    cardHtml = `
+      <div class="study-card grammar-card" onclick="speak('${word.example.replace(/'/g,"\\'")}')">
+        <div class="study-emoji">${word.emoji}</div>
+        <div class="grammar-sentence-display">${sentenceHL}</div>
+        <div class="study-pt">${word.examplePt}</div>
+        <div class="grammar-rule-tag">💡 ${word.rule}</div>
+        <div class="study-audio-hint">🔊 Clique para ouvir o exemplo</div>
+      </div>`;
+  } else {
+    cardHtml = `
+      <div class="study-card" onclick="speak('${word.en.replace(/'/g,"\\'")}')">
+        <div class="study-emoji">${word.emoji}</div>
+        <div class="study-en">${word.en}</div>
+        <div class="study-pt">${word.pt}</div>
+        <div class="study-audio-hint">🔊 Clique para ouvir</div>
+      </div>`;
+  }
+
+  const tipBox = isGrammar ? `
+    <div class="grammar-tip-box">
+      <span class="tip-label">📌 Regra do Episódio:</span>
+      <span class="tip-text">${ep.grammarTip}</span>
+    </div>` : "";
+
+  app.innerHTML = `
+    <div class="screen lesson-screen">
+      <div class="lesson-header">
+        <button class="btn-back" onclick="goTo('episode-select')">← Sair</button>
+        <div class="lesson-ep-title">${ep.icon} ${ep.title}</div>
+        <div class="lesson-phase-badge">📖 Estudar</div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+        <div class="progress-text">${state.studyIndex + 1} / ${total}</div>
+      </div>
+      ${tipBox}
+      ${cardHtml}
+      <div class="example-block">
+        <div class="example-label">Exemplo em Batalha:</div>
+        <div class="example-en">"${word.example}"</div>
+        <div class="example-pt">${word.examplePt}</div>
+        <button class="btn-listen" onclick="event.stopPropagation(); speak('${word.example.replace(/'/g,"\\'")}')">
+          🔊 Ouvir exemplo
+        </button>
+      </div>
+      <div class="study-nav">
+        ${state.studyIndex > 0
+          ? `<button class="btn btn-ghost" onclick="prevStudy()">← Anterior</button>`
+          : `<div></div>`}
+        ${state.studyIndex < total - 1
+          ? `<button class="btn btn-primary" onclick="nextStudy()">Próxima →</button>`
+          : `<button class="btn btn-success" onclick="startQuiz()">⚡ Iniciar Quiz!</button>`}
+      </div>
+      <div class="study-dots">
+        ${ep.words.map((_,i) =>
+          `<span class="dot ${i===state.studyIndex?"active":i<state.studyIndex?"done":""}"></span>`
+        ).join("")}
+      </div>
+    </div>`;
+
+  setTimeout(() => speak(isGrammar ? word.example : word.en), 400);
+}
+
+function nextStudy() { state.studyIndex++; render(); }
+function prevStudy() { state.studyIndex--; render(); }
+
+function startQuiz() {
+  state.lessonPhase = "quiz";
+  state.quizIndex = 0;
+  state.quizScore = 0;
+  state.streak = 0;
+  state.quizWords = shuffle([...state.currentEpisode.words]);
+  render();
+}
+
+// ─── Quiz ─────────────────────────────────────────────────────────────────────
+function renderQuiz() {
+  const ep = state.currentEpisode;
+  const isGrammar = ep.type === "grammar";
+  const word = state.quizWords[state.quizIndex];
+  const total = state.quizWords.length;
+  const progress = (state.quizIndex / total) * 100;
+
+  let questionHtml, optionsHtml, correctKey;
+
+  if (isGrammar) {
+    correctKey = word.pt;
+    const blank = word.en.replace("___", '<span class="blank-slot">___</span>');
+    questionHtml = `
+      <div class="quiz-question">
+        <div class="quiz-word-emoji">${word.emoji}</div>
+        <div class="grammar-quiz-sentence">${blank}</div>
+        <div class="quiz-instruction">Complete a frase — escolha a palavra certa:</div>
+      </div>`;
+    const pool = (ep.grammarOptions || ["???"])
+      .map(pt => ({ pt }));
+    optionsHtml = shuffle([...pool]).map(opt => `
+      <button class="quiz-option grammar-opt" data-val="${opt.pt}"
+        onclick="checkAnswer('${opt.pt.replace(/'/g,"\\'")}','${correctKey.replace(/'/g,"\\'")}',this)">
+        ${opt.pt}
+      </button>`).join("");
+  } else {
+    correctKey = word.en;
+    const others = ep.words.filter(w => w.en !== word.en);
+    const options = shuffle([word, ...shuffle(others).slice(0,3)]);
+    questionHtml = `
+      <div class="quiz-question">
+        <div class="quiz-word-emoji">${word.emoji}</div>
+        <div class="quiz-word-en" onclick="speak('${word.en.replace(/'/g,"\\'")}')">
+          ${word.en} <span class="quiz-listen">🔊</span>
+        </div>
+        <div class="quiz-instruction">Qual é a tradução em português?</div>
+      </div>`;
+    optionsHtml = options.map(opt => `
+      <button class="quiz-option" data-val="${opt.en}"
+        onclick="checkAnswer('${opt.en.replace(/'/g,"\\'")}','${correctKey.replace(/'/g,"\\'")}',this)">
+        ${opt.emoji} ${opt.pt}
+      </button>`).join("");
+  }
+
+  const streakBadge = state.streak >= 3
+    ? `<div class="streak-badge">🔥 Série: ${state.streak}!</div>` : "";
+
+  app.innerHTML = `
+    <div class="screen quiz-screen">
+      <div class="lesson-header">
+        <button class="btn-back" onclick="goTo('episode-select')">← Sair</button>
+        <div class="lesson-ep-title">${ep.icon} Quiz</div>
+        <div class="quiz-score">⭐ ${state.quizScore}/${total}</div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+        <div class="progress-text">${state.quizIndex + 1} / ${total}</div>
+      </div>
+      ${streakBadge}
+      ${questionHtml}
+      <div class="quiz-options ${isGrammar?"grammar-options":""}">${optionsHtml}</div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+    </div>`;
+
+  if (!isGrammar) setTimeout(() => speak(word.en), 300);
+}
+
+function checkAnswer(chosen, correct, btn) {
+  document.querySelectorAll(".quiz-option").forEach(b => b.disabled = true);
+  const word = state.quizWords[state.quizIndex];
+  const isCorrect = chosen === correct;
+  const fb = document.getElementById("quiz-feedback");
+
+  if (isCorrect) {
+    btn.classList.add("correct");
+    state.quizScore++;
+    state.streak++;
+    if (state.streak > state.stats.bestStreak) state.stats.bestStreak = state.streak;
+    fb.innerHTML = `<div class="feedback correct-msg">✅ Correto! ${state.streak >= 3 ? "🔥 Série incrível!" : "Ótimo trabalho!"}</div>`;
+    playSound("correct");
+  } else {
+    btn.classList.add("wrong");
+    document.querySelectorAll(".quiz-option").forEach(b => {
+      if (b.dataset.val === correct) b.classList.add("correct");
+    });
+    state.streak = 0;
+    const correctLabel = state.currentEpisode.type === "grammar" ? correct : word.pt;
+    fb.innerHTML = `<div class="feedback wrong-msg">❌ Era: <strong>${correctLabel}</strong></div>`;
+    playSound("wrong");
+  }
+
+  setTimeout(() => {
+    state.quizIndex++;
+    state.quizIndex >= state.quizWords.length ? finishLesson() : render();
+  }, 1500);
+}
+
+// ─── Result ───────────────────────────────────────────────────────────────────
+function finishLesson() {
+  const ep = state.currentEpisode;
+  const total = state.quizWords.length;
+  const score = state.quizScore;
+  const pct = Math.round((score / total) * 100);
+  const perfect = score === total;
+
+  state.stats.lessonsCompleted++;
+  if (!state.stats.completedEpisodes.includes(ep.id)) state.stats.completedEpisodes.push(ep.id);
+  if (perfect) state.stats.perfectLessons++;
+
+  const xpGained = Math.round(ep.xpReward * (pct / 100));
+  const levelUp = addXP(xpGained);
+  const newAch = checkAchievements();
+  saveStats();
+
+  state.screen = "result";
+  state.resultData = { score, total, pct, xpGained, levelUp, newAch, perfect };
+  render();
+}
+
+function renderResult() {
+  const { score, total, pct, xpGained, levelUp, newAch, perfect } = state.resultData;
+  const ep = state.currentEpisode;
+  const epIdx = EPISODES.indexOf(ep);
+
+  let grade, gradeMsg;
+  if (pct===100) { grade="S"; gradeMsg="Perfeito! Você é um mestre!"; }
+  else if (pct>=80) { grade="A"; gradeMsg="Excelente, guerreiro!"; }
+  else if (pct>=60) { grade="B"; gradeMsg="Bom trabalho, continue!"; }
+  else { grade="C"; gradeMsg="Continue praticando, você consegue!"; }
+
+  const achHtml = newAch.map(a =>
+    `<div class="ach-unlock">${a.icon} <strong>${a.title}</strong> desbloqueada!</div>`
+  ).join("");
+
+  // Suggest next episode
+  const nextEp = EPISODES[epIdx + 1];
+  const nextBtn = nextEp
+    ? `<button class="btn btn-secondary" onclick="startEpisode(${epIdx+1})">
+         ▶️ ${nextEp.icon} Próximo: ${nextEp.title}
+       </button>`
+    : "";
+
+  app.innerHTML = `
+    <div class="screen result-screen">
+      <div class="result-top">
+        <div class="result-grade grade-${grade.toLowerCase()}">${grade}</div>
+        <div class="result-msg">${gradeMsg}</div>
+        ${perfect ? `<div class="perfect-banner">💯 PERFEITO! INCRÍVEL!</div>` : ""}
+      </div>
+      <div class="result-stats">
+        <div class="rs-item"><div class="rs-value">${score}/${total}</div><div class="rs-label">Acertos</div></div>
+        <div class="rs-item"><div class="rs-value">${pct}%</div><div class="rs-label">Precisão</div></div>
+        <div class="rs-item"><div class="rs-value">+${xpGained}</div><div class="rs-label">XP ganho</div></div>
+      </div>
+      ${levelUp ? `<div class="levelup-banner">🎉 LEVEL UP! Você é Nível ${state.stats.level}!</div>` : ""}
+      ${achHtml ? `<div class="ach-section"><h3>🏆 Conquistas Desbloqueadas!</h3>${achHtml}</div>` : ""}
+      <div class="result-buttons">
+        <button class="btn btn-primary" onclick="startEpisode(${epIdx})">🔄 Jogar Novamente</button>
+        ${nextBtn}
+        <button class="btn btn-ghost" onclick="goTo('episode-select')">📺 Todos os Episódios</button>
+      </div>
+    </div>`;
+}
+
+// ─── Achievements ─────────────────────────────────────────────────────────────
+function renderAchievements() {
+  const unlockedCount = state.stats.unlockedAchievements.length;
+  const cards = ACHIEVEMENTS.map(a => {
+    const unlocked = state.stats.unlockedAchievements.includes(a.id);
+    return `
+      <div class="ach-card ${unlocked?"unlocked":"locked"}">
+        <div class="ach-icon">${unlocked ? a.icon : "🔒"}</div>
+        <div class="ach-info">
+          <div class="ach-title">${unlocked ? a.title : "???"}</div>
+          <div class="ach-desc">${a.desc}</div>
+        </div>
+      </div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="screen ach-screen">
+      <div class="screen-header">
+        <button class="btn-back" onclick="goTo('home')">← Voltar</button>
+        <h2>🏆 Conquistas</h2>
+        <div class="ach-count">${unlockedCount}/${ACHIEVEMENTS.length}</div>
+      </div>
+      <div class="ach-list">${cards}</div>
+    </div>`;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function goTo(screen) { state.screen = screen; render(); }
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function playSound(type) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    if (type === "correct") {
+      osc.frequency.setValueAtTime(520, ctx.currentTime);
+      osc.frequency.setValueAtTime(660, ctx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(800, ctx.currentTime + 0.2);
+    } else {
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.setValueAtTime(200, ctx.currentTime + 0.15);
+    }
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+if (window.speechSynthesis?.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = () => {};
+}
+render();
+
+  </script>
+</body>
+</html>
